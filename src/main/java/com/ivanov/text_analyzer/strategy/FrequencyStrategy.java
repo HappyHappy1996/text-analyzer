@@ -36,9 +36,9 @@ public class FrequencyStrategy implements TaskStrategy {
 			}
 		}
 		
-		for (Entry<String, Integer> entry : map.entrySet()) {
-			System.out.println(entry.getKey() + " повторяется " + entry.getValue());
-		}
+//		for (Entry<String, Integer> entry : map.entrySet()) {
+//			System.out.println(entry.getKey() + " повторяется " + entry.getValue());
+//		}
 		
 		int max = map.values().stream().max(Comparator.naturalOrder()).get();
 
@@ -82,5 +82,3 @@ public class FrequencyStrategy implements TaskStrategy {
 	}
 
 }
-
-//-i text.txt -t frequency

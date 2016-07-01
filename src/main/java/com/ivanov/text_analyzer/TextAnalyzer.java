@@ -1,6 +1,5 @@
 package com.ivanov.text_analyzer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -8,8 +7,10 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.ivanov.text_analyzer.file.FileUtil;
+import com.ivanov.text_analyzer.strategy.DuplicateStrategy;
 import com.ivanov.text_analyzer.strategy.FrequencyStrategy;
 import com.ivanov.text_analyzer.strategy.HelpStrategy;
+import com.ivanov.text_analyzer.strategy.LengthStrategy;
 import com.ivanov.text_analyzer.strategy.TaskStrategy;
 
 public class TextAnalyzer {
@@ -79,6 +80,15 @@ public class TextAnalyzer {
 
 		if ("frequency".equals(task)) {
 			strategy = new FrequencyStrategy(fileData);
+			return;
+		}
+		
+		if ("length".equals(task)) {
+			strategy = new LengthStrategy(fileData);
+			return;
+		}
+		if ("duplicates".equals(task)) {
+			strategy = new DuplicateStrategy(fileData);
 			return;
 		}
 

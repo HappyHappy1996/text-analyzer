@@ -6,6 +6,6 @@ public class Demo {
 
 		TextAnalyzer textAnalyzer = new TextAnalyzer();
 		textAnalyzer.launch();
-		
+		//-i text.txt -t frequency length duplicates
 	}
 }
