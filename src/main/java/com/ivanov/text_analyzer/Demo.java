@@ -5,7 +5,7 @@ public class Demo {
 	public static void main(String[] args) {
 
 		TextAnalyzer textAnalyzer = new TextAnalyzer();
-		textAnalyzer.launch(args);
+		textAnalyzer.launch();
 		
 	}
 }

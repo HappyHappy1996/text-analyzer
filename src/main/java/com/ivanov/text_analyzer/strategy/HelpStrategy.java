@@ -1,9 +1,19 @@
 package com.ivanov.text_analyzer.strategy;
 
-public class HelpStrategy implements TaskStrategy {
+import com.beust.jcommander.JCommander;
 
-	public void analyse() {
-		System.out.println("help information");
+public class HelpStrategy implements TaskStrategy {
+	
+	JCommander jc;
+	
+	public HelpStrategy(JCommander jc) {
+		this.jc = jc;
 	}
+
+	public void execute() {
+		jc.usage();
+	}
+	
+	
 
 }
