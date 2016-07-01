@@ -15,17 +15,16 @@ import com.ivanov.text_analyzer.strategy.TaskStrategy;
 public class TextAnalyzer {
 
 	private TaskStrategy strategy;
-	private File file;
 	private String fileData;
 	private JCommander jCommander;
 
 	@Parameter(names = { "-i", "--input" }, description = "path to the input file (e.g. -i C:\\input.txt)")
 	private String filePath;
-	@Parameter(names = { "-t", "--task" }, description = "permitted values: frequency, length, duplicates")
+	@Parameter(names = { "-t", "--task" }, description = "permitted values: frequency, length, duplicates (e.g. -t frequency)")
 	private String task;
 	@Parameter(names = "--help", help = true)
 	private boolean help;
-	@Parameter(names = "-exit")
+	@Parameter(names = "-exit", description = "exit from the application (i.e. -exit)")
 	private boolean exit;
 
 	public void launch() {
@@ -37,7 +36,6 @@ public class TextAnalyzer {
 			dropState();
 			nextLine = scanner.nextLine();
 			args = nextLine.split(" ");
-			System.out.println(args.length);
 
 			try {
 				jCommander = new JCommander(this, args);
@@ -60,7 +58,6 @@ public class TextAnalyzer {
 
 	private void dropState() {
 		strategy = null;
-		file = null;
 		fileData = null;
 		help = false;
 	}
