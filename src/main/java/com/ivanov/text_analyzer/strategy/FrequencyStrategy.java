@@ -18,9 +18,9 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 	public void execute() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		String[] lines = getFileData().split("\n");
-
+		
 		Pattern pattern = Pattern
-				.compile("REGEX_SELECT_WORDS");
+				.compile(REGEX_SELECT_WORDS);
 		
 		for (int i = 0; i < lines.length; i++) {
 			Matcher matcher = pattern.matcher(lines[i]);
@@ -34,9 +34,11 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 			}
 		}
 		
-//		for (Entry<String, Integer> entry : map.entrySet()) {
-//			System.out.println(entry.getKey() + " повторяется " + entry.getValue());
-//		}
+		System.out.println(map.size());
+		
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			System.out.println(entry.getKey() + " повторяется " + entry.getValue());
+		}
 		
 		int max = map.values().stream().max(Comparator.naturalOrder()).get();
 
@@ -58,25 +60,13 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 			}
 			
 		}
-		
-//		System.out.println("size of maxFrequentWords " + maxFrequentWords.size());
-//		
-//		for (String string : maxFrequentWords) {
-//			System.out.println(string);
-//		}
-		
 		Collections.sort(maxFrequentWords, Comparator.<String>reverseOrder());
-		
-//		for (String string : maxFrequentWords) {
-//			System.out.println(string);
-//		}
 		
 		for (int i = 0; i < minElementsCount; i++) {
 			String word = maxFrequentWords.get(i);
 			System.out.println(word + " -> " + map.get(word));
 		}
 
-//		System.out.println(fileData);
 	}
 
 }

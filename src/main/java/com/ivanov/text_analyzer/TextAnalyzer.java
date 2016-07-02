@@ -36,6 +36,9 @@ public class TextAnalyzer {
 		do {
 			dropState();
 			nextLine = scanner.nextLine();
+			
+			long timeBefore = System.currentTimeMillis();
+			
 			args = nextLine.split(" ");
 
 			try {
@@ -51,7 +54,8 @@ public class TextAnalyzer {
 				continue;
 			}
 			strategy.execute();
-
+			long timeAfter = System.currentTimeMillis();
+			System.out.println("elapsed time: " + (timeAfter - timeBefore) + " millis");
 		} while (true);
 		
 		scanner.close();
@@ -77,7 +81,7 @@ public class TextAnalyzer {
 				System.err.println("There are no file that you specified!");
 			}
 		}
-
+		
 		if ("frequency".equals(task)) {
 			strategy = new FrequencyStrategy(fileData);
 			return;
