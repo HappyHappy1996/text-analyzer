@@ -34,12 +34,6 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 			}
 		}
 		
-		System.out.println(map.size());
-		
-		for (Entry<String, Integer> entry : map.entrySet()) {
-			System.out.println(entry.getKey() + " повторяется " + entry.getValue());
-		}
-		
 		int max = map.values().stream().max(Comparator.naturalOrder()).get();
 
 		ArrayList<String> maxFrequentWords = new ArrayList<String>();

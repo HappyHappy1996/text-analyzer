@@ -21,14 +21,20 @@ public class TextAnalyzer {
 
 	@Parameter(names = { "-i", "--input" }, description = "path to the input file (e.g. -i C:\\input.txt)")
 	private String filePath;
-	@Parameter(names = { "-t", "--task" }, description = "permitted values: frequency, length, duplicates (e.g. -t frequency)")
+	@Parameter(names = { "-t", "--task" }, description = "permitted values: frequency (find the most two frequent words "
+			+ "and print them out sorted alphabetically in a reversed order), length (find first three longest words and "
+			+ "print this words along with the their length sorted them in a descend order by the total number of "
+			+ "letters each word contains), duplicates (find first three words which have duplicates and print them "
+			+ "inversely (e.g. map -> pam) in the upper case sorted by length in ascending order) e.g. -t frequency")
 	private String task;
-	@Parameter(names = "--help", help = true)
+	@Parameter(names = "--help", description = "shows brief information about how to use this applicaiton", help = true)
 	private boolean help;
 	@Parameter(names = "-exit", description = "exit from the application (i.e. -exit)")
 	private boolean exit;
 
 	public void launch() {
+		
+		printWelcomeInfo();
 		Scanner scanner = new Scanner(System.in);
 		String nextLine = null;
 		String[] args = null;
@@ -61,6 +67,14 @@ public class TextAnalyzer {
 		scanner.close();
 	}
 
+	private void printWelcomeInfo() {
+		System.out.println("Weclome to text-analyzer application");
+		System.out.println("It provides some analysis action with text files. Commands:");
+		System.out.println("--help - a detailed information of how to use this app");
+		System.out.println("-i (--input) - path to the input file (e.g. C:\\Program Files\\Java\\input.txt)");
+		System.out.println("-t (--task) – task to execute. Permitted values: frequency, length, duplicates");
+	}
+
 	private void dropState() {
 		strategy = null;
 		fileData = null;
@@ -79,22 +93,23 @@ public class TextAnalyzer {
 				fileData = FileUtil.readFile(filePath);
 			} catch (FileNotFoundException e) {
 				System.err.println("There are no file that you specified!");
+				throw new IllegalArgumentException();
+			}
+			if ("frequency".equals(task)) {
+				strategy = new FrequencyStrategy(fileData);
+				return;
+			}
+			
+			if ("length".equals(task)) {
+				strategy = new LengthStrategy(fileData);
+				return;
+			}
+			if ("duplicates".equals(task)) {
+				strategy = new DuplicateStrategy(fileData);
+				return;
 			}
 		}
 		
-		if ("frequency".equals(task)) {
-			strategy = new FrequencyStrategy(fileData);
-			return;
-		}
-		
-		if ("length".equals(task)) {
-			strategy = new LengthStrategy(fileData);
-			return;
-		}
-		if ("duplicates".equals(task)) {
-			strategy = new DuplicateStrategy(fileData);
-			return;
-		}
 
 		if (strategy == null) {
 			throw new IllegalArgumentException();
