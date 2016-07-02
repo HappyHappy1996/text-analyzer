@@ -9,20 +9,18 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FrequencyStrategy implements TaskStrategy {
-
-	private String fileData;
+public class FrequencyStrategy extends AbstractTaskStrategy {
 
 	public FrequencyStrategy(String fileData) {
-		this.fileData = fileData;
+		super(fileData);
 	}
 
 	public void execute() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		String[] lines = fileData.split("\n");
+		String[] lines = getFileData().split("\n");
 
 		Pattern pattern = Pattern
-				.compile("([a-zA-Zа-яА-Я]+)(, | \\(|\\) |\\. |[\\.,;:\\-' ])?");
+				.compile("REGEX_SELECT_WORDS");
 		
 		for (int i = 0; i < lines.length; i++) {
 			Matcher matcher = pattern.matcher(lines[i]);

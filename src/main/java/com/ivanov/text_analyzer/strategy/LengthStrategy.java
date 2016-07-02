@@ -8,21 +8,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class LengthStrategy implements TaskStrategy {
-
-	private String fileData;
+public class LengthStrategy extends AbstractTaskStrategy {
 
 	public LengthStrategy(String fileData) {
-		this.fileData = fileData;
+		super(fileData);
 	}
 	
 	public void execute() {
 		
 		Set<String> set = new HashSet<String>();
-		String[] lines = fileData.split("\n");
+		String[] lines = getFileData().split("\n");
 
 		Pattern pattern = Pattern
-				.compile("([a-zA-Zа-яА-Я]+)(, | \\(|\\) |\\. |[\\.,;:\\-' ])?");
+				.compile(REGEX_SELECT_WORDS);
 		
 		for (int i = 0; i < lines.length; i++) {
 			Matcher matcher = pattern.matcher(lines[i]);
@@ -42,7 +40,9 @@ public class LengthStrategy implements TaskStrategy {
 			}
 		};
 		
-		List<String> longetsWords = set.stream().sorted(comparator).limit(3).collect(Collectors.toList());
+		List<String> longetsWords = set.stream()
+				.sorted(comparator)
+				.limit(3).collect(Collectors.toList());
 		
 		for (String string : longetsWords) {
 			System.out.println(string + " -> " + string.length());

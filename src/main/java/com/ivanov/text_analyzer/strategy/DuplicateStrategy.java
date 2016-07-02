@@ -8,21 +8,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class DuplicateStrategy implements TaskStrategy {
-
-	private String fileData;
+public class DuplicateStrategy extends AbstractTaskStrategy {
 
 	public DuplicateStrategy(String fileData) {
-		this.fileData = fileData;
+		super(fileData);
 	}
-	
+
 	public void execute() {
 		Set<String> words = new HashSet<String>();
 		Set<String> duplicateWords = new HashSet<String>();
-		String[] lines = fileData.split("\n");
+		String[] lines = getFileData().split("\n");
 
 		Pattern pattern = Pattern
-				.compile("([a-zA-Zа-яА-Я]+)(, | \\(|\\) |\\. |[\\.,;:\\-' ])?");
+				.compile(REGEX_SELECT_WORDS);
 		
 		int maxElementsCount = 3;
 		int actualElementsCount = 0;
@@ -32,7 +30,8 @@ public class DuplicateStrategy implements TaskStrategy {
 			while (matcher.find()) {
 				String word = matcher.group(1).toLowerCase();
 				if (words.contains(word)) {
-					String duplicateWord = new StringBuilder(word.toUpperCase()).reverse().toString();
+					String duplicateWord = new StringBuilder(word.toUpperCase()).
+							reverse().toString();
 					duplicateWords.add(duplicateWord);
 					actualElementsCount++;
 					if (actualElementsCount >= maxElementsCount) {
@@ -55,7 +54,8 @@ public class DuplicateStrategy implements TaskStrategy {
 			}
 		};
 		
-		List<String> sortedDuplicateWords = duplicateWords.stream().sorted(comparator).collect(Collectors.toList());
+		List<String> sortedDuplicateWords = duplicateWords.stream()
+				.sorted(comparator).collect(Collectors.toList());
 		
 		for (String string : sortedDuplicateWords) {
 			System.out.println(string);
