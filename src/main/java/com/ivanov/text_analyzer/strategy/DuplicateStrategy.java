@@ -55,7 +55,7 @@ public class DuplicateStrategy extends AbstractTaskStrategy {
 		Comparator<String> comparator = new Comparator<String>() {
 			@Override
 			public int compare(String str1, String str2) {
-				return str1.length() - str1.length();
+				return str1.length() - str2.length();
 			}
 		};
 		
