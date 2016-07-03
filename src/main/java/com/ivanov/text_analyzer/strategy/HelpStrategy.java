@@ -2,9 +2,12 @@ package com.ivanov.text_analyzer.strategy;
 
 import com.beust.jcommander.JCommander;
 
+/*
+ * Strategy that prints detailed information of how to use application
+ */
 public class HelpStrategy implements TaskStrategy {
 	
-	JCommander jc;
+	private JCommander jc;
 	
 	public HelpStrategy(JCommander jc) {
 		this.jc = jc;
@@ -13,7 +16,5 @@ public class HelpStrategy implements TaskStrategy {
 	public void execute() {
 		jc.usage();
 	}
-	
-	
 
 }

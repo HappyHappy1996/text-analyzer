@@ -9,6 +9,10 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * Strategy that provides search the most two frequent words
+ * and prints them out sorted alphabetically in a reversed order
+ */
 public class FrequencyStrategy extends AbstractTaskStrategy {
 
 	public FrequencyStrategy(String fileData) {
@@ -16,25 +20,24 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 	}
 
 	public void execute() {
-		Map<String, Integer> map = new HashMap<String, Integer>();
 		String[] lines = getFileData().split("\n");
+		Map<String, Integer> wordsToRepetitionsCount = new HashMap<String, Integer>();
 		
-		Pattern pattern = Pattern
-				.compile(REGEX_SELECT_WORDS);
+		Pattern pattern = Pattern.compile(REGEX_SELECT_WORDS);
 		
 		for (int i = 0; i < lines.length; i++) {
 			Matcher matcher = pattern.matcher(lines[i]);
 			while (matcher.find()) {
 				String word = matcher.group(1).toLowerCase();
 				Integer integer = 1;
-				if (map.containsKey(word)) {
-					integer = map.get(word).intValue() + 1;
+				if (wordsToRepetitionsCount.containsKey(word)) {
+					integer = wordsToRepetitionsCount.get(word).intValue() + 1;
 				}
-				map.put(word, integer);
+				wordsToRepetitionsCount.put(word, integer);
 			}
 		}
 		
-		int max = map.values().stream().max(Comparator.naturalOrder()).get();
+		int max = wordsToRepetitionsCount.values().stream().max(Comparator.naturalOrder()).get();
 
 		ArrayList<String> maxFrequentWords = new ArrayList<String>();
 		
@@ -42,7 +45,7 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 		int actualElementsCount = 0;
 				
 		for (int i = max; i > 0; i--) {
-			for (Entry<String, Integer> entry : map.entrySet()) {
+			for (Entry<String, Integer> entry : wordsToRepetitionsCount.entrySet()) {
 				if (entry.getValue() == i) {
 					maxFrequentWords.add(entry.getKey());
 					actualElementsCount++;
@@ -58,7 +61,7 @@ public class FrequencyStrategy extends AbstractTaskStrategy {
 		
 		for (int i = 0; i < minElementsCount; i++) {
 			String word = maxFrequentWords.get(i);
-			System.out.println(word + " -> " + map.get(word));
+			System.out.println(word + " -> " + wordsToRepetitionsCount.get(word));
 		}
 
 	}

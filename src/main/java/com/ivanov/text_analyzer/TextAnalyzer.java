@@ -13,6 +13,18 @@ import com.ivanov.text_analyzer.strategy.HelpStrategy;
 import com.ivanov.text_analyzer.strategy.LengthStrategy;
 import com.ivanov.text_analyzer.strategy.TaskStrategy;
 
+/*
+ * A shell application which performs tasks with text from files one by another.
+ * It accepts parameters from command line. The signature of input parameters:
+ * -i (--input) - path to the input file (e.g. C:\Program Files\Java\input.txt). Required: true
+ * -t (--task) – task to execute. Required: true, Permitted values: frequency, length, duplicates
+ * -- help – a detailed information of how to use application
+ * -exit - close application
+ * 
+ * Each output contains ‘elapsed time’ information in milliseconds e.g. elapsed time: 400 millis
+ * 
+ * e.g. -i text.txt -t length
+ */
 public class TextAnalyzer {
 
 	private TaskStrategy strategy;
@@ -95,24 +107,19 @@ public class TextAnalyzer {
 				System.err.println("There are no file that you specified!");
 				throw new IllegalArgumentException();
 			}
-			if ("frequency".equals(task)) {
+			switch (task) {
+			case "frequency":
 				strategy = new FrequencyStrategy(fileData);
 				return;
-			}
-			
-			if ("length".equals(task)) {
+			case "length":
 				strategy = new LengthStrategy(fileData);
 				return;
-			}
-			if ("duplicates".equals(task)) {
+			case "duplicates":
 				strategy = new DuplicateStrategy(fileData);
 				return;
+			default:
+				throw new IllegalArgumentException();
 			}
-		}
-		
-
-		if (strategy == null) {
-			throw new IllegalArgumentException();
 		}
 
 	}

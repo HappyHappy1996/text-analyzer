@@ -8,28 +8,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/*
+ * Strategy that provides search for first three longest words and prints
+ * this words along with the their length sorted them
+ * in a descend order by the total number of letters each word contains
+ */
 public class LengthStrategy extends AbstractTaskStrategy {
 
 	public LengthStrategy(String fileData) {
 		super(fileData);
 	}
-	
-	public void execute() {
-		
-		Set<String> set = new HashSet<String>();
-		String[] lines = getFileData().split("\n");
 
-		Pattern pattern = Pattern
-				.compile(REGEX_SELECT_WORDS);
-		
+	public void execute() {
+
+		String[] lines = getFileData().split("\n");
+		Set<String> words = new HashSet<String>();
+
+		Pattern pattern = Pattern.compile(REGEX_SELECT_WORDS);
+
 		for (int i = 0; i < lines.length; i++) {
 			Matcher matcher = pattern.matcher(lines[i]);
 			while (matcher.find()) {
 				String word = matcher.group(1).toLowerCase();
-				set.add(word);
+				words.add(word);
 			}
 		}
-		
+
 		/*
 		 * reverse order comparator by length
 		 */
@@ -39,15 +43,14 @@ public class LengthStrategy extends AbstractTaskStrategy {
 				return str2.length() - str1.length();
 			}
 		};
-		
-		List<String> longetsWords = set.stream()
-				.sorted(comparator)
-				.limit(3).collect(Collectors.toList());
-		
+
+		List<String> longetsWords = words.stream().sorted(comparator).limit(3)
+				.collect(Collectors.toList());
+
 		for (String string : longetsWords) {
 			System.out.println(string + " -> " + string.length());
 		}
-		
+
 	}
 
 }

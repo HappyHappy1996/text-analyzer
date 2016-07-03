@@ -8,6 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/*
+ * Strategy that provides search for first three words which
+ * have duplicates and prints them inversely (e.g. map -> pam)
+ * in the upper case sorted by length in ascending order
+ */
 public class DuplicateStrategy extends AbstractTaskStrategy {
 
 	public DuplicateStrategy(String fileData) {
@@ -15,12 +20,12 @@ public class DuplicateStrategy extends AbstractTaskStrategy {
 	}
 
 	public void execute() {
+		
+		String[] lines = getFileData().split("\n");
 		Set<String> words = new HashSet<String>();
 		Set<String> duplicateWords = new HashSet<String>();
-		String[] lines = getFileData().split("\n");
 
-		Pattern pattern = Pattern
-				.compile(REGEX_SELECT_WORDS);
+		Pattern pattern = Pattern.compile(REGEX_SELECT_WORDS);
 		
 		int maxElementsCount = 3;
 		int actualElementsCount = 0;

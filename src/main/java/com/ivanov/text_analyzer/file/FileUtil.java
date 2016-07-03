@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/*
+ * Class that provides functionality with files
+ */
 public class FileUtil {
 	
 	public static String readFile(String filePath) throws FileNotFoundException {
